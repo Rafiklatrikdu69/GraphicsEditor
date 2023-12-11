@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="TPGraphicsEditor_Etu">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/TPGraphicsEditor_Etu.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
