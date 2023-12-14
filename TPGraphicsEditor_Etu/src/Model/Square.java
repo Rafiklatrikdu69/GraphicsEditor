@@ -22,7 +22,7 @@ public class Square extends  Shape{
 
     public String getType()
     {
-        return "Circle";
+        return "Square";
     }
 
 
@@ -37,10 +37,14 @@ public class Square extends  Shape{
     }
 
     public void draw(Graphics g) {
+        int x = (int) (center.x - radius / 2);
+        int y = (int) (center.y - radius / 2);
+
         g.setColor(color);
-        g.fillOval(center.x,center.y,(int)radius,(int)radius);
+        g.fillRect(x, y, (int) radius, (int) radius);
+
         g.setColor(Color.black);
-        g.drawOval(center.x,center.y,(int)radius,(int)radius);
+        g.drawRect(x, y, (int) radius, (int) radius);
     }
 
     public DefaultMutableTreeNode getJTreeNodes() {

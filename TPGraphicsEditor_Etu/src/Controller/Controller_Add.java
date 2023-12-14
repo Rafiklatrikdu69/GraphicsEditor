@@ -6,8 +6,9 @@ package Controller;
 
 import Model.Circle;
 import Model.ShapeManager;
-import java.awt.Color;
-import java.awt.Point;
+import Model.Square;
+import Model.Shape;
+import java.awt.*;
 import java.util.Random;
 
 /**
@@ -25,8 +26,16 @@ public class Controller_Add {
     public void control(String name, Color color)
     {
         Random rand= new Random(System.currentTimeMillis());
-        Circle circle = new Circle(new Point(rand.nextInt(200), rand.nextInt(200)), color);
-        
-        data.add(circle);
+        if(name.equals("Circle")) {
+
+            System.out.println("le cercle");
+           Shape circle = new Circle(new Point(rand.nextInt(200), rand.nextInt(200)), color);
+
+            data.add(circle);
+        }else if(name.equals("Square")){
+            Shape square = new Square(new Point(rand.nextInt(200), rand.nextInt(200)), color);
+
+            data.add(square);
+        }
     }
 }
