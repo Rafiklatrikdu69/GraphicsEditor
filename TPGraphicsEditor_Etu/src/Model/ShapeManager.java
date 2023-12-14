@@ -24,10 +24,11 @@ public class ShapeManager extends Observable {
     }
 
     public void add(Shape shape) {
-        if(root.getType().equals("Group")){
+        if(root.isGroup()){
             ((Group) root).add(shape);
             setChanged();
             notifyObservers();
+            System.out.println("c'est un groupe ");
         }
 
 

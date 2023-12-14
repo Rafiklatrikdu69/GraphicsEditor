@@ -41,7 +41,10 @@ public class Group extends  Shape{
         return   treeNode;
     }
 
-
+    @Override
+    public boolean isGroup() {
+        return true;
+    }
 
 
     public void add(Shape shape) {

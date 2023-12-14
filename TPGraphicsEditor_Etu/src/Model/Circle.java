@@ -56,4 +56,9 @@ public class Circle  extends  Shape{
  
         return new DefaultMutableTreeNode(getType()+ "(Center["+center.x+", "+center.y +"], R["+radius+"]");
     }
+
+    @Override
+    public boolean isGroup() {
+        return false;
+    }
 }

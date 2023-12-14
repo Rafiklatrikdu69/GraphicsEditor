@@ -9,4 +9,5 @@ public abstract class Shape {
 
     public abstract void draw(Graphics g);
     public abstract DefaultMutableTreeNode getJTreeNodes();
+    public abstract boolean isGroup();
 }
