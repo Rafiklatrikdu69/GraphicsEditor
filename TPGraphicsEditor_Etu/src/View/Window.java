@@ -13,9 +13,7 @@ import Model.ShapeManager;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 import javax.swing.JColorChooser;
 import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
@@ -307,8 +305,10 @@ public class Window extends javax.swing.JFrame implements Observer {
         int[] selection = jTree_Objects.getSelectionRows();
         //System.out.println("La selection :" + selection[0]);
         ArrayList<Integer> tab  = new ArrayList<>();
-      for(int i = 0;i<selection.length;i++){
+        Arrays.sort(selection);
+      for(int i = selection.length-1;i>=0 ;i--){
           ca.control(selection[i]);
+
       }
         data.groupSelectedShapes(tab);
 
