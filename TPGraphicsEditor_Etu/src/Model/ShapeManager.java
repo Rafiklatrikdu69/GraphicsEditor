@@ -10,6 +10,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 public class ShapeManager extends Observable {
+    private static int cpt;
 
     private Shape root;
 
@@ -23,15 +24,65 @@ public class ShapeManager extends Observable {
 
     }
 
-    public void add(Shape shape) {
-        if(root.isGroup()){
-            ((Group) root).add(shape);
-            setChanged();
-            notifyObservers();
-            System.out.println("c'est un groupe ");
+    public void parcourt(int index, Group groupe) {
+        for (int i = 0; i < groupe.getTaille(); i++) {
+            cpt++;
+            System.out.println("i  : " + i);
+            if (index == cpt) {
+                groupe.getShape().remove(i);
+                setChanged();
+                notifyObservers();
+                break;
+            } else {
+                if (groupe.getShapeAtIndex(i).isGroup()) {
+                    parcourt(i, groupe);
+                }
+            }
+        }
+    }
+
+    public void remove(int index) {
+        cpt = 1;
+        parcourt(index, ((Group) root));
+
+    }
+
+    public void groupSelectedShapes(ArrayList<Integer> selectedIndices) {
+        if (selectedIndices.size() < 2) {
+
+            return;
+        }
+
+        Group newGroup = new Group("New Group", new ArrayList<>());
+
+
+        for (int index : selectedIndices) {
+            Shape selectedShape = ((Group) root).getShapeAtIndex(index);
+            if (selectedShape != null) {
+                newGroup.add(selectedShape);
+            }
         }
 
 
+        for (int i = selectedIndices.size() - 1; i >= 0; i--) {
+            int indexToRemove = selectedIndices.get(i);
+            ((Group) root).remove(indexToRemove);
+        }
+
+        add(newGroup);
+
+
+        setChanged();
+        notifyObservers();
+    }
+
+
+    public void add(Shape shape) {
+
+        ((Group) root).add(shape);
+        setChanged();
+        notifyObservers();
+        System.out.println("c'est un groupe ");
 
     }
 
@@ -40,7 +91,7 @@ public class ShapeManager extends Observable {
     }
 
     public DefaultTreeModel getTreeModel() {
-        DefaultMutableTreeNode treeNode = new DefaultMutableTreeNode("Shapes");
+        DefaultMutableTreeNode treeNode = new DefaultMutableTreeNode("ShapesRafik");
         treeNode.add(root.getJTreeNodes());
         return new DefaultTreeModel(treeNode);
     }

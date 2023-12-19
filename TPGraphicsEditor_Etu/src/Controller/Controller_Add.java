@@ -4,10 +4,9 @@
  */
 package Controller;
 
-import Model.Circle;
-import Model.ShapeManager;
-import Model.Square;
+import Model.*;
 import Model.Shape;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -17,25 +16,18 @@ import java.util.Random;
  */
 public class Controller_Add {
     private final ShapeManager data;
+    private ShapeFactory factory;
     
     public Controller_Add(ShapeManager d)
     {
         data = d;
+        factory = new ShapeFactory();
     }
     
     public void control(String name, Color color)
     {
-        Random rand= new Random(System.currentTimeMillis());
-        if(name.equals("Circle")) {
+      Shape shape = factory.creationForme((name));
 
-            System.out.println("le cercle");
-           Shape circle = new Circle(new Point(rand.nextInt(200), rand.nextInt(200)), color);
-
-            data.add(circle);
-        }else if(name.equals("Square")){
-            Shape square = new Square(new Point(rand.nextInt(200), rand.nextInt(200)), color);
-
-            data.add(square);
-        }
+      data.add(shape);
     }
 }
