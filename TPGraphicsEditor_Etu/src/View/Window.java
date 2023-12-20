@@ -5,10 +5,10 @@
 package View;
 
 
-import Controller.Controller_Add;
+import Controller.Controller_Ajouter;
 import Controller.Controller_Groupe;
-import Controller.Controller_Supp;
-import Controller.Controller_degrouper;
+import Controller.Controller_Suppression;
+import Controller.Controller_Degroupe;
 import Model.*;
 import Model.Rectangle;
 import Model.Shape;
@@ -17,8 +17,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -251,8 +249,6 @@ public class Window extends javax.swing.JFrame implements Observer {
                 jButton_GroupActionPerformed(e);
             }
         });
-<<<<<<< HEAD
-=======
         jButton_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 if (jButton_Add.getText().equals("Add")) {
@@ -270,7 +266,7 @@ public class Window extends javax.swing.JFrame implements Observer {
                         Color newColor = null;
                         switch (shapes.getType()) {
                             case "Circle":
-                                Circle circle = (Circle) shapes;
+                                cercle circle = (cercle) shapes;
                                 newCenterX = (int) jSpinnerPositionX.getValue();
                                 newCenterY = (int) jSpinnerPositionY.getValue();
                                 circle.setCenter(new Point(newCenterX, newCenterY));
@@ -338,7 +334,9 @@ public class Window extends javax.swing.JFrame implements Observer {
 
                     switch (shape.getType()) {
                         case "Circle":
-                            Circle circle = (Circle) shape;
+                            cercle circle = (cercle) shape;
+                            jTextPaneInformations.setText(circle.getType()+circle.getCenter()+circle.getColor());
+
                             jSpinnerPositionX.setValue(circle.getCenter().x);
                             jSpinnerPositionY.setValue(circle.getCenter().y);
                             jSpinnerRadius.setValue(circle.getRadius());
@@ -349,6 +347,7 @@ public class Window extends javax.swing.JFrame implements Observer {
                         case "Square":
                             jSpinnerRadius.setEnabled(false);
                             Square square = (Square) shape;
+                            jTextPaneInformations.setText(square.getType()+square.getCenter()+square.getColor());
                             jSpinnerPositionX.setValue(square.getCenter().x);
                             jSpinnerPositionY.setValue(square.getCenter().y);
                             jButtonColor.setBackground(square.getColor());
@@ -358,6 +357,7 @@ public class Window extends javax.swing.JFrame implements Observer {
                         case "Rectangle":
                             jSpinnerRadius.setEnabled(false);
                             Rectangle rectangle = (Rectangle) shape;
+                            jTextPaneInformations.setText(rectangle.getType()+rectangle.getColor());
                             jSpinnerPositionX.setValue(rectangle.getUpperLeft().x);
                             jSpinnerPositionY.setValue(rectangle.getUpperLeft().y);
                             jButtonColor.setBackground(rectangle.getColor());
@@ -382,7 +382,6 @@ public class Window extends javax.swing.JFrame implements Observer {
                 jButton_DeGroupActionPerformed(e);
             }
         });
->>>>>>> feature/degrouper
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -435,14 +434,21 @@ public class Window extends javax.swing.JFrame implements Observer {
 
 
     private void jButton_RemoveActionPerformed(java.awt.event.ActionEvent evt) {
-        Controller_Supp ca = new Controller_Supp(data);
+        Controller_Suppression ca = new Controller_Suppression(data);
         int[] selection = jTree_Objects.getSelectionRows();
-
-
-        Arrays.sort(selection);
-
-        ca.control(selection);
-<<<<<<< HEAD
+        boolean chercher = false;
+        for (int i = 0; i < selection.length; i++) {
+            if (selection[i] == 0) {
+                chercher = true;
+                break;
+            }
+        }
+        if (chercher != true) {
+            Arrays.sort(selection);
+            ca.control(selection);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vous ne pouvez pas Supprimer la Racine !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
 
 
     }
@@ -451,22 +457,19 @@ public class Window extends javax.swing.JFrame implements Observer {
 
         int[] selection = jTree_Objects.getSelectionRows();
         Controller_Groupe cg = new Controller_Groupe(data);
-
-        Arrays.sort(selection);
-        cg.control(selection);
-=======
->>>>>>> feature/degrouper
-
-
-    }
-
-    private void jButton_GroupActionPerformed(java.awt.event.ActionEvent evt) {
-
-        int[] selection = jTree_Objects.getSelectionRows();
-        Controller_Groupe cg = new Controller_Groupe(data);
-
-        Arrays.sort(selection);
-        cg.control(selection);
+        boolean chercher = false;
+        for (int i = 0; i < selection.length; i++) {
+            if (selection[i] == 0) {
+                chercher = true;
+                break;
+            }
+        }
+        if(chercher!=true) {
+            Arrays.sort(selection);
+            cg.control(selection);
+        }else{
+            JOptionPane.showMessageDialog(null, "Vous ne pouvez pas grouper la Racine !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
 
 
     }
@@ -475,10 +478,20 @@ public class Window extends javax.swing.JFrame implements Observer {
     private void jButton_DeGroupActionPerformed(java.awt.event.ActionEvent evt) {
 
         int[] selection = jTree_Objects.getSelectionRows();
-        Controller_degrouper cdeg = new Controller_degrouper(data);
-
-        Arrays.sort(selection);
-        cdeg.control(selection);
+        Controller_Degroupe cdeg = new Controller_Degroupe(data);
+        boolean chercher = false;
+        for (int i = 0; i < selection.length; i++) {
+            if (selection[i] == 0) {
+                chercher = true;
+                break;
+            }
+        }
+        if(chercher!=true) {
+            Arrays.sort(selection);
+            cdeg.control(selection);
+        }else{
+            JOptionPane.showMessageDialog(null, "Vous ne pouvez pas degrouper la Racine !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        };
 
 
     }
@@ -487,7 +500,7 @@ public class Window extends javax.swing.JFrame implements Observer {
     private void jButton_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AddActionPerformed
 
 
-        Controller_Add ca = new Controller_Add(data);
+        Controller_Ajouter ca = new Controller_Ajouter(data);
 
         if (jRadioCircle.isSelected()) {
             ca.control("Circle", Color.BLACK);
@@ -573,3 +586,4 @@ public class Window extends javax.swing.JFrame implements Observer {
     // End of variables declaration//GEN-END:variables
 
 }
+
