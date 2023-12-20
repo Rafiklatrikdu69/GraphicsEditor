@@ -1,17 +1,13 @@
 package Model;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Observable;
-import java.util.Random;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 public class ShapeManager extends Observable {
-    private static int cpt;
+    public static int cpt;
 
     private Shape root;
 
@@ -19,13 +15,49 @@ public class ShapeManager extends Observable {
         init();
     }
 
-    private void init() {
-        root = new Group("Root", new ArrayList<>());
-        System.out.println(root.toString(2));
 
+public Group rechercheGroupe(int index, Group groupe){
+    for (int i = 0; i < groupe.getTaille(); i++) {
+        cpt++;
+        if (index == cpt) {
+            return groupe;
+        } else {
+            if (groupe.getShapeAtIndex(i).isGroup()) {
+                Group shape = rechercheGroupe(index, (Group)groupe.getShapeAtIndex(i));
+                if(shape!=null){
+                    return shape;
+                }
+                // return  recherche(i, groupe);
+            }
+
+        }
+    }
+    return null;
+}
+    public Shape recherche(int index, Group groupe) {
+        for (int i = 0; i < groupe.getTaille(); i++) {
+            cpt++;
+            if (index == cpt) {
+                return groupe.getShape().get(i);
+            } else {
+                if (groupe.getShapeAtIndex(i).isGroup()) {
+                    Shape shape = recherche(index, (Group)groupe.getShapeAtIndex(i));
+                    if(shape!=null){
+                        return shape;
+                    }
+                 // return  recherche(i, groupe);
+                }
+
+            }
+        }
+        return null;
     }
 
-    public void parcourt(int index, Group groupe) {
+    private void init() {
+        root = new Group("Root", new ArrayList<>());
+    }
+
+    public Shape parcourt(int index, Group groupe) {
         for (int i = 0; i < groupe.getTaille(); i++) {
             cpt++;
             System.out.println("i  : " + i);
@@ -36,43 +68,25 @@ public class ShapeManager extends Observable {
                 break;
             } else {
                 if (groupe.getShapeAtIndex(i).isGroup()) {
-                    parcourt(i, groupe);
+                    Shape shape = parcourt(index, (Group)groupe.getShapeAtIndex(i));
+                    if(shape!=null){
+                        return shape;
+                    }
                 }
             }
         }
+        return null;
     }
 
-    public void remove(int index) {
+    public void parcourArbre(int index) {
+        cpt = 1;
+        System.out.println("La shape : " + recherche(index, ((Group) root)).toString(1));
+    }
+
+    public void remove(int index ) {
+
         cpt = 1;
         parcourt(index, ((Group) root));
-
-    }
-
-    public void groupSelectedShapes(ArrayList<Integer> selectedIndices) {
-        if (selectedIndices.size() < 2) {
-
-            return;
-        }
-
-        Group newGroup = new Group("New Group", new ArrayList<>());
-
-
-        for (int index : selectedIndices) {
-            Shape selectedShape = ((Group) root).getShapeAtIndex(index);
-            if (selectedShape != null) {
-                newGroup.add(selectedShape);
-            }
-        }
-
-
-        for (int i = selectedIndices.size() - 1; i >= 0; i--) {
-            int indexToRemove = selectedIndices.get(i);
-            ((Group) root).remove(indexToRemove);
-        }
-
-        add(newGroup);
-
-
         setChanged();
         notifyObservers();
     }
@@ -102,5 +116,8 @@ public class ShapeManager extends Observable {
         return "ShapeManager{" +
                 "root=" + root +
                 '}';
+    }
+    public Group getRoot(){
+        return (Group) this.root;
     }
 }

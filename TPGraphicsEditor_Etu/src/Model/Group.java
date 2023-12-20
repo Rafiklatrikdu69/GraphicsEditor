@@ -6,16 +6,18 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 public class Group extends Shape {
     private ArrayList<Shape> shape;
     private String name;
 
-    Group(String name, ArrayList<Shape> shapes) {
+    public Group(String name, ArrayList<Shape> shapes) {
         this.name = name;
         this.shape = shapes;
     }
-    public String getName(){
-        return  this.name;
+
+    public String getName() {
+        return this.name;
     }
 
     @Override
@@ -57,9 +59,11 @@ public class Group extends Shape {
 
 
 
+
     public void remove(int indice) {
-     this.shape.remove(this.shape.get(indice));
+        this.shape.remove(this.shape.get(indice));
     }
+
     public Shape getShapeAtIndex(int index) {
         if (index >= 0 && index < shape.size()) {
             return shape.get(index);
@@ -67,13 +71,15 @@ public class Group extends Shape {
             return null;
         }
     }
-    public int getTaille(){
-        return  this.shape.size();
+
+    public int getTaille() {
+        return this.shape.size();
     }
-    public ArrayList<Shape> getShape(){
-        return  this.shape;
+
+    public ArrayList<Shape> getShape() {
+        return this.shape;
     }
-    }
+}
 
 
 
