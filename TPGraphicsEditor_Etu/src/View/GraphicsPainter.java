@@ -4,20 +4,16 @@
  */
 package View;
 
-import Model.Circle;
 import Model.ShapeManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.border.Border;
 
 /**
  *
- * @author adrien.peytavie
+ * @author Rafik Bouchenna
  */
 public class GraphicsPainter extends JComponent{
 

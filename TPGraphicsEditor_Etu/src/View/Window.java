@@ -17,8 +17,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -268,7 +266,7 @@ public class Window extends javax.swing.JFrame implements Observer {
                         Color newColor = null;
                         switch (shapes.getType()) {
                             case "Circle":
-                                Circle circle = (Circle) shapes;
+                                cercle circle = (cercle) shapes;
                                 newCenterX = (int) jSpinnerPositionX.getValue();
                                 newCenterY = (int) jSpinnerPositionY.getValue();
                                 circle.setCenter(new Point(newCenterX, newCenterY));
@@ -336,7 +334,7 @@ public class Window extends javax.swing.JFrame implements Observer {
 
                     switch (shape.getType()) {
                         case "Circle":
-                            Circle circle = (Circle) shape;
+                            cercle circle = (cercle) shape;
                             jSpinnerPositionX.setValue(circle.getCenter().x);
                             jSpinnerPositionY.setValue(circle.getCenter().y);
                             jSpinnerRadius.setValue(circle.getRadius());
@@ -434,11 +432,19 @@ public class Window extends javax.swing.JFrame implements Observer {
     private void jButton_RemoveActionPerformed(java.awt.event.ActionEvent evt) {
         Controller_Supp ca = new Controller_Supp(data);
         int[] selection = jTree_Objects.getSelectionRows();
-
-
-        Arrays.sort(selection);
-
-        ca.control(selection);
+        boolean chercher = false;
+        for (int i = 0; i < selection.length; i++) {
+            if (selection[i] == 0) {
+                chercher = true;
+                break;
+            }
+        }
+        if (chercher != true) {
+            Arrays.sort(selection);
+            ca.control(selection);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vous ne pouvez pas Supprimer la Racine !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
 
 
     }
@@ -447,9 +453,19 @@ public class Window extends javax.swing.JFrame implements Observer {
 
         int[] selection = jTree_Objects.getSelectionRows();
         Controller_Groupe cg = new Controller_Groupe(data);
-
-        Arrays.sort(selection);
-        cg.control(selection);
+        boolean chercher = false;
+        for (int i = 0; i < selection.length; i++) {
+            if (selection[i] == 0) {
+                chercher = true;
+                break;
+            }
+        }
+        if(chercher!=true) {
+            Arrays.sort(selection);
+            cg.control(selection);
+        }else{
+            JOptionPane.showMessageDialog(null, "Vous ne pouvez pas grouper la Racine !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
 
 
     }
@@ -459,9 +475,19 @@ public class Window extends javax.swing.JFrame implements Observer {
 
         int[] selection = jTree_Objects.getSelectionRows();
         Controller_degrouper cdeg = new Controller_degrouper(data);
-
-        Arrays.sort(selection);
-        cdeg.control(selection);
+        boolean chercher = false;
+        for (int i = 0; i < selection.length; i++) {
+            if (selection[i] == 0) {
+                chercher = true;
+                break;
+            }
+        }
+        if(chercher!=true) {
+            Arrays.sort(selection);
+            cdeg.control(selection);
+        }else{
+            JOptionPane.showMessageDialog(null, "Vous ne pouvez pas degrouper la Racine !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        };
 
 
     }

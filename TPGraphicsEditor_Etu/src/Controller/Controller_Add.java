@@ -11,23 +11,36 @@ import java.awt.*;
 import java.util.Random;
 
 /**
+ * La classe Controller_Add gère l'ajout de nouvelles formes dans le modèle ShapeManager.
+ * Elle utilise une ShapeFactory pour créer des instances de formes en fonction du nom et de la couleur spécifiés.
  *
- * @author adrien.peytavie
+ * @author Rafik Bouchenna
  */
 public class Controller_Add {
     private final ShapeManager data;
     private ShapeFactory factory;
-    
-    public Controller_Add(ShapeManager d)
-    {
+
+    /**
+     * Constructeur de la classe Controller_Add.
+     *
+     * @param d Le gestionnaire de formes (ShapeManager) à utiliser.
+     */
+    public Controller_Add(ShapeManager d) {
         data = d;
         factory = new ShapeFactory();
     }
-    
-    public void control(String name, Color color)
-    {
-      Shape shape = factory.creationForme((name));
 
-      data.add(shape);
+    /**
+     * Contrôle le processus d'ajout d'une nouvelle forme.
+     *
+     * @param name  Le nom de la forme à ajouter (par exemple, "Circle", "Square", "Rectangle").
+     * @param color La couleur de la nouvelle forme.
+     */
+    public void control(String name, Color color) {
+        // Utilise la ShapeFactory pour créer une nouvelle instance de forme
+        Shape shape = factory.creationForme(name);
+
+        // Ajoute la nouvelle forme au modèle
+        data.add(shape);
     }
 }
