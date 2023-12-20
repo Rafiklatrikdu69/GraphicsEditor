@@ -20,11 +20,8 @@ public class TPGraphicsEditor {
      * @param args the command line arguments
     */ 
     public static void main(String[] args) {
-
         ShapeManager data = new ShapeManager();
         new Window(data).setVisible(true);
-
-
     }
     
 }

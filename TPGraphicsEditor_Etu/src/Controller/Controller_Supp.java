@@ -14,7 +14,11 @@ public class Controller_Supp {
         this.data = d;
     }
     public void control(int selection[]){
+<<<<<<< HEAD
         Arrays.sort(selection);
+=======
+
+>>>>>>> main
         for(int i = selection.length-1;i>=0 ;i--) {
             data.remove(selection[i]);
         }

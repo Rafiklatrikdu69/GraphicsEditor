@@ -8,6 +8,10 @@ import javax.swing.tree.DefaultTreeModel;
 
 public class ShapeManager extends Observable {
     public static int cpt;
+<<<<<<< HEAD
+=======
+    public static int hauteur;
+>>>>>>> main
 
     private Shape root;
 
@@ -16,6 +20,7 @@ public class ShapeManager extends Observable {
     }
 
 
+<<<<<<< HEAD
 public Group rechercheGroupe(int index, Group groupe){
     for (int i = 0; i < groupe.getTaille(); i++) {
         cpt++;
@@ -34,6 +39,26 @@ public Group rechercheGroupe(int index, Group groupe){
     }
     return null;
 }
+=======
+    public Group rechercheGroupe(int index, Group groupe){
+        for (int i = 0; i < groupe.getTaille(); i++) {
+            cpt++;
+            if (index == cpt) {
+                return groupe;
+            } else {
+                if (groupe.getShapeAtIndex(i).isGroup()) {
+                    Group shape = rechercheGroupe(index, (Group)groupe.getShapeAtIndex(i));
+                    if(shape!=null){
+                        return shape;
+                    }
+                    // return  recherche(i, groupe);
+                }
+
+            }
+        }
+        return null;
+    }
+>>>>>>> main
     public Shape recherche(int index, Group groupe) {
         for (int i = 0; i < groupe.getTaille(); i++) {
             cpt++;
@@ -45,7 +70,11 @@ public Group rechercheGroupe(int index, Group groupe){
                     if(shape!=null){
                         return shape;
                     }
+<<<<<<< HEAD
                  // return  recherche(i, groupe);
+=======
+                    // return  recherche(i, groupe);
+>>>>>>> main
                 }
 
             }
@@ -120,4 +149,33 @@ public Group rechercheGroupe(int index, Group groupe){
     public Group getRoot(){
         return (Group) this.root;
     }
+<<<<<<< HEAD
 }
+=======
+
+    public void MajGroup(){
+        setChanged();
+        notifyObservers();
+    }
+
+    public int Hauteur(int index, Group groupe){
+        for (int i = 0; i < groupe.getTaille(); i++) {
+            cpt++;
+            if (index == cpt) {
+                return hauteur;
+            } else {
+                if (groupe.getShapeAtIndex(i).isGroup()) {
+                    hauteur++;
+                    int hauteur = Hauteur(i, (Group)groupe.getShapeAtIndex(i));
+                    if(hauteur!=0){
+                        return hauteur;
+                    }
+                }
+
+            }
+        }
+        return -1;
+
+    }
+}
+>>>>>>> main

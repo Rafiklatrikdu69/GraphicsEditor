@@ -312,11 +312,28 @@ public class Window extends javax.swing.JFrame implements Observer {
         int[] selection = jTree_Objects.getSelectionRows();
 
 
+<<<<<<< HEAD
        Arrays.sort(selection);
         for(int i = selection.length-1;i>=0 ;i--){
             ca.control(selection);
 
         }
+=======
+        Arrays.sort(selection);
+
+        ca.control(selection);
+
+
+    }
+
+    private void jButton_GroupActionPerformed(java.awt.event.ActionEvent evt) {
+
+        int[] selection = jTree_Objects.getSelectionRows();
+        Controller_Groupe cg = new Controller_Groupe(data);
+
+        Arrays.sort(selection);
+        cg.control(selection);
+>>>>>>> main
 
 
     }
