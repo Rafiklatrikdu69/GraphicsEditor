@@ -6,16 +6,17 @@ package View;
 
 
 import Controller.Controller_Add;
+import Controller.Controller_Groupe;
 import Controller.Controller_Supp;
-import Model.Group;
-import Model.ShapeManager;
+import Controller.Controller_degrouper;
+import Model.*;
+import Model.Rectangle;
+import Model.Shape;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
-import javax.swing.JColorChooser;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -237,16 +238,146 @@ public class Window extends javax.swing.JFrame implements Observer {
         jRadioRectangle.setText("Rectangle");
 
         jButton_Add.setText("Add");
-        jButton_Add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_AddActionPerformed(evt);
 
-            }
-        });
         jButton_Remove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jButton_RemoveActionPerformed(e);
+            }
+        });
+        jButton_Group.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jButton_GroupActionPerformed(e);
+            }
+        });
+        jButton_Add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (jButton_Add.getText().equals("Add")) {
+                    // Code d'ajout ici
+                    jButton_AddActionPerformed(evt);
+                } else if (jButton_Add.getText().equals("Modifier")) {
+                    // Code de modification ici
+                    int selectedRow = jTree_Objects.getSelectionRows()[0];
+                    ShapeManager.cpt = 0;
+
+                    Shape shapes = data.recherche(selectedRow, data.getRoot());
+                    if (shapes != null) {
+                        int newCenterX = 0;
+                        int newCenterY = 0;
+                        Color newColor = null;
+                        switch (shapes.getType()) {
+                            case "Circle":
+                                Circle circle = (Circle) shapes;
+                                newCenterX = (int) jSpinnerPositionX.getValue();
+                                newCenterY = (int) jSpinnerPositionY.getValue();
+                                circle.setCenter(new Point(newCenterX, newCenterY));
+                                circle.setRadius(((Number) jSpinnerRadius.getValue()).doubleValue());
+                                newColor = jButtonColor.getBackground();
+                                System.out.println("New Color: " + newColor);
+                                circle.setColor(newColor);
+                                System.out.println(circle.getType());
+                                data.MajGroup();
+                                break;
+                            case "Square":
+                                Square square = (Square) shapes;
+                                newCenterX = (int) jSpinnerPositionX.getValue();
+                                newCenterY = (int) jSpinnerPositionY.getValue();
+                                square.setCenter(new Point(newCenterX, newCenterY));
+
+                                newColor = jButtonColor.getBackground();
+                                System.out.println("New Color: " + newColor);
+                                square.setColor(newColor);
+                                System.out.println(square.getType());
+                                data.MajGroup();
+                                break;
+                            case "Rectangle":
+                                Rectangle rectangle = (Rectangle) shapes;
+                                newCenterX = (int) jSpinnerPositionX.getValue();
+                                newCenterY = (int) jSpinnerPositionY.getValue();
+                                rectangle.setHeight(newCenterY);
+                                rectangle.setWidth(newCenterX);
+
+                                newColor = jButtonColor.getBackground();
+                                System.out.println("New Color: " + newColor);
+                                rectangle.setColor(newColor);
+                                System.out.println(rectangle.getType());
+                                data.MajGroup();
+                                break;
+
+                            default:
+                                System.out.println("Type de forme inconnu : " + shapes.getType());
+                        }
+
+                        // Mettez à jour votre modèle de données si nécessaire
+                        data.MajGroup();
+
+                        // Réinitialiser le bouton "Ajouter"
+                        jButton_Add.setText("Add");
+                    }
+                }
+
+            }
+        });
+
+        jTree_Objects.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    jSpinnerPositionX.setEnabled(true);
+                    jSpinnerPositionY.setEnabled(true);
+                    jSpinnerRadius.setEnabled(true);
+                    System.out.println("double click !");
+                    jButton_Add.setText("Modifier");
+
+                    int selectedRow = jTree_Objects.getSelectionRows()[0];
+                    ShapeManager.cpt = 0;
+                    Shape shape = data.recherche(selectedRow, data.getRoot());
+
+                    switch (shape.getType()) {
+                        case "Circle":
+                            Circle circle = (Circle) shape;
+                            jSpinnerPositionX.setValue(circle.getCenter().x);
+                            jSpinnerPositionY.setValue(circle.getCenter().y);
+                            jSpinnerRadius.setValue(circle.getRadius());
+                            jButtonColor.setBackground(circle.getColor());
+                            System.out.println("Initial Color: " + circle.getColor());
+
+                            break;
+                        case "Square":
+                            jSpinnerRadius.setEnabled(false);
+                            Square square = (Square) shape;
+                            jSpinnerPositionX.setValue(square.getCenter().x);
+                            jSpinnerPositionY.setValue(square.getCenter().y);
+                            jButtonColor.setBackground(square.getColor());
+                            System.out.println("Initial Color: " + square.getColor());
+
+                            break;
+                        case "Rectangle":
+                            jSpinnerRadius.setEnabled(false);
+                            Rectangle rectangle = (Rectangle) shape;
+                            jSpinnerPositionX.setValue(rectangle.getUpperLeft().x);
+                            jSpinnerPositionY.setValue(rectangle.getUpperLeft().y);
+                            jButtonColor.setBackground(rectangle.getColor());
+                            System.out.println("Initial Color: " + rectangle.getColor());
+
+                            break;
+
+                        default:
+                            // Cas par défaut
+                            break;
+
+                    }
+
+                }
+            }
+        });
+
+
+        jButton_UnGroup.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jButton_DeGroupActionPerformed(e);
             }
         });
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -303,17 +434,38 @@ public class Window extends javax.swing.JFrame implements Observer {
     private void jButton_RemoveActionPerformed(java.awt.event.ActionEvent evt) {
         Controller_Supp ca = new Controller_Supp(data);
         int[] selection = jTree_Objects.getSelectionRows();
-        //System.out.println("La selection :" + selection[0]);
-        ArrayList<Integer> tab  = new ArrayList<>();
-        Arrays.sort(selection);
-      for(int i = selection.length-1;i>=0 ;i--){
-          ca.control(selection[i]);
 
-      }
-        data.groupSelectedShapes(tab);
+
+        Arrays.sort(selection);
+
+        ca.control(selection);
 
 
     }
+
+    private void jButton_GroupActionPerformed(java.awt.event.ActionEvent evt) {
+
+        int[] selection = jTree_Objects.getSelectionRows();
+        Controller_Groupe cg = new Controller_Groupe(data);
+
+        Arrays.sort(selection);
+        cg.control(selection);
+
+
+    }
+
+
+    private void jButton_DeGroupActionPerformed(java.awt.event.ActionEvent evt) {
+
+        int[] selection = jTree_Objects.getSelectionRows();
+        Controller_degrouper cdeg = new Controller_degrouper(data);
+
+        Arrays.sort(selection);
+        cdeg.control(selection);
+
+
+    }
+
 
     private void jButton_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AddActionPerformed
 
@@ -331,6 +483,9 @@ public class Window extends javax.swing.JFrame implements Observer {
 
             jTextPaneInformations.setText("Square ajouter");
             System.out.println("Square");
+        }
+        if (jRadioRectangle.isSelected()) {
+            ca.control("Rectangle", jButtonColor.getBackground());
         }
     }//GEN-LAST:event_jButton_AddActionPerformed
 
@@ -377,6 +532,7 @@ public class Window extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton jButton_Group;
     private javax.swing.JButton jButton_Remove;
     private javax.swing.JButton jButton_UnGroup;
+    private javax.swing.JButton ButtonModifier;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

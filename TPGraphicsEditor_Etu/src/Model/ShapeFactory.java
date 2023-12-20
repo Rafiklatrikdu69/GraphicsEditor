@@ -19,6 +19,9 @@ public class ShapeFactory {
         }else if(forme.equals("Square")){
              shape = new Square(new Point(rand.nextInt(200), rand.nextInt(200)), Color.BLUE);
         }
+        else if(forme.equals("Rectangle")){
+            shape = new Rectangle(new Point(rand.nextInt(200), rand.nextInt(200)),100,150, Color.BLUE);
+        }
         return shape;
     }
 }
