@@ -5,6 +5,7 @@ import Model.ShapeFactory;
 import Model.ShapeManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Controller_Supp {
     private ShapeManager data;
@@ -12,7 +13,10 @@ public class Controller_Supp {
     {
         this.data = d;
     }
-    public void control(int index){
-        data.remove(index);
+    public void control(int selection[]){
+
+        for(int i = selection.length-1;i>=0 ;i--) {
+            data.remove(selection[i]);
+        }
     }
 }

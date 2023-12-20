@@ -6,6 +6,7 @@ package View;
 
 
 import Controller.Controller_Add;
+import Controller.Controller_Groupe;
 import Controller.Controller_Supp;
 import Model.Group;
 import Model.ShapeManager;
@@ -249,6 +250,12 @@ public class Window extends javax.swing.JFrame implements Observer {
                 jButton_RemoveActionPerformed(e);
             }
         });
+        jButton_Group.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jButton_GroupActionPerformed(e);
+            }
+        });
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -303,14 +310,22 @@ public class Window extends javax.swing.JFrame implements Observer {
     private void jButton_RemoveActionPerformed(java.awt.event.ActionEvent evt) {
         Controller_Supp ca = new Controller_Supp(data);
         int[] selection = jTree_Objects.getSelectionRows();
-        //System.out.println("La selection :" + selection[0]);
-        ArrayList<Integer> tab  = new ArrayList<>();
-        Arrays.sort(selection);
-      for(int i = selection.length-1;i>=0 ;i--){
-          ca.control(selection[i]);
 
-      }
-        data.groupSelectedShapes(tab);
+
+        Arrays.sort(selection);
+
+        ca.control(selection);
+
+
+    }
+
+    private void jButton_GroupActionPerformed(java.awt.event.ActionEvent evt) {
+
+        int[] selection = jTree_Objects.getSelectionRows();
+        Controller_Groupe cg = new Controller_Groupe(data);
+
+        Arrays.sort(selection);
+        cg.control(selection);
 
 
     }
