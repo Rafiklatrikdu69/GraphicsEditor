@@ -51,7 +51,11 @@ public class Controller_Groupe {
             newGroup.add(shape);
             data.remove(selection[i]);
         }
+<<<<<<< HEAD
        
+=======
+
+>>>>>>> feature/degrouper
         GroupeParent.add(newGroup);
         data.MajGroup();
 

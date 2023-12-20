@@ -28,7 +28,10 @@ public class ShapeManager extends Observable {
                     if(shape!=null){
                         return shape;
                     }
+<<<<<<< HEAD
                     // return  recherche(i, groupe);
+=======
+>>>>>>> feature/degrouper
                 }
 
             }

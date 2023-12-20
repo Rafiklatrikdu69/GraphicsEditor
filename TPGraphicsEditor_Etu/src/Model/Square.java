@@ -15,9 +15,28 @@ public class Square extends  Shape{
         color = c;
     }
 
-    public Rectangle getBox()
-    {
-        return new Rectangle((int)(center.x), (int)(center.y ), (int)(radius), (int)( radius));
+    public Point getCenter() {
+        return center;
+    }
+
+    public void setCenter(Point center) {
+        this.center = center;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public String getType()

@@ -9,11 +9,9 @@ import View.Window;
 
 /**
  *
- * @author adrien.peytavie
+ * @author Rafik Bouchenna
  */
-//ajout de forme
-//group de formes
-    //modifier les parametre de la forme
+
 public class TPGraphicsEditor {
 
     /**

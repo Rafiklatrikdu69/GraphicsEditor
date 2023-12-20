@@ -23,7 +23,32 @@ public class Circle  extends  Shape{
        radius = 100;
        color = c;
     }
-    
+
+    public void setCenter(Point center) {
+        this.center = center;
+
+    }
+
+    public Point getCenter() {
+        return center;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public Rectangle getBox()
     {
         return new Rectangle((int)(center.x), (int)(center.y ), (int)(radius), (int)( radius)); 
